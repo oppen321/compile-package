@@ -56,7 +56,7 @@ jobs:
         df -hT $GITHUB_WORKSPACE
         curl -L ${{ secrets.SDK_X86_64_URL }} -o x86_64.tar.zst
         tar -I zstd -xvf x86_64.tar.zst
-        mv x86_64 openwrt
+        mv openwrt-sdk-24.10.0-x86-64_gcc-13.3.0_musl.Linux-x86_64 openwrt
         cd openwrt
         echo "OPENWRT_PATH=$PWD" >> $GITHUB_ENV
 
