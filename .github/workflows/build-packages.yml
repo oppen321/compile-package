@@ -1,0 +1,37 @@
+name: Build Packages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build ${{ matrix.arch }}-${{ matrix.sdk }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk:
+          - 24.10.0
+        arch:
+          - aarch64_cortex-a53
+          - x86_64
+
+    steps:
+      - uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: Build
+        uses: oppen321/gh-action-sdk@main
+        env:
+          ARCH: ${{ matrix.arch }}-${{ matrix.sdk }}
+          FEEDNAME: packages_ci
+          PACKAGES: luci-app-fchomo luci-app-homeproxy luci-app-nikki luci-app-openclash luci-app-passwall luci-app-passwall2 luci-app-ssr-plus luci-app-bypass brook hysteria ipt2socks pdnsd-alt redsocks2 shadow-tls trojan tuic-client xray-plugin v2ray-core v2ray-geodata naiveproxy sing-box
+          NO_REFRESH_CHECK: true
+          IGNORE_ERRORS: true
+
+      - name: Store packages
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ matrix.arch }}-${{ matrix.sdk }}
+          path: bin/packages/${{ matrix.arch }}/packages_ci/*.ipk
