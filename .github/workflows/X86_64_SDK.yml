@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
 
 env:
-  REPO_URL: ${{ secrets.sdk_x86_64_url }})
   TZ: Asia/Shanghai
 
 jobs:
@@ -100,11 +99,3 @@ jobs:
         tag: OpenWrt-X86_64-24.10
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: rom.tar.gz
-
-        
-        
-        
-
-        
-
-        
