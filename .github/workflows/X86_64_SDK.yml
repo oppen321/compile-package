@@ -68,7 +68,7 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Compile Firmware
+    - name: Compile Packages
       id: compile
       run: |
         cd $OPENWRT_PATH
