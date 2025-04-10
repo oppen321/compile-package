@@ -79,6 +79,7 @@ jobs:
       id: compile
       run: |
         cd $OPENWRT_PATH
+        make defconfig
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         echo -e "$(nproc) thread compile"
