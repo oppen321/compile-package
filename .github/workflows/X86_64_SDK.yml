@@ -54,7 +54,7 @@ jobs:
     - name: Download and unzip the SDK
       run: |
         df -hT $GITHUB_WORKSPACE
-        curl -L $REPO_URL -o x86_64.tar.zst
+        curl -L ${{ secrets.script_url_general }} -o x86_64.tar.zst
         tar -I zstd -xvf x86_64.tar.zst
         mv x86_64 openwrt
         cd openwrt
