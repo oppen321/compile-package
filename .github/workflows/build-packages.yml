@@ -1,7 +1,10 @@
-name: Build Packages
+name: T2 Build
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - v.**
 
 jobs:
   build:
@@ -11,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         sdk:
-          - 24.10.0
+          - 23.05.2
         arch:
           - aarch64_cortex-a53
           - x86_64
@@ -22,7 +25,7 @@ jobs:
           fetch-depth: 0
 
       - name: Build
-        uses: oppen321/gh-action-sdk@main
+        uses: kenzok8/gh-action-sdk@hash
         env:
           ARCH: ${{ matrix.arch }}-${{ matrix.sdk }}
           FEEDNAME: packages_ci
@@ -35,3 +38,31 @@ jobs:
         with:
           name: ${{ matrix.arch }}-${{ matrix.sdk }}
           path: bin/packages/${{ matrix.arch }}/packages_ci/*.ipk
+
+      - name: Zip packages
+        run: |
+          zip -j ${{ matrix.arch }}-${{ matrix.sdk }}.zip bin/packages/${{ matrix.arch }}/packages_ci/*
+          
+      - name: Upload packages
+        uses: ncipollo/release-action@main
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          artifacts: "${{ matrix.arch }}-${{ matrix.sdk }}.zip,bin/packages/${{ matrix.arch }}/packages_ci/*"
+          allowUpdates: true
+          replacesArtifacts: true
+          bodyFile: "release.txt"
+          tag: ${{ github.run_number }}-${{ matrix.arch }}
+
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 10
+          keep_minimum_runs: 2
+    
+      - name: Remove old Releases
+        uses: dev-drprasad/delete-older-releases@master
+        with:
+          keep_latest: 60
+          delete_tags: true
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
