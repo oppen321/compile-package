@@ -26,7 +26,7 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}-${{ matrix.sdk }}
           FEEDNAME: packages_ci
-          PACKAGES: chinadns-ng dns2socks geoview hysteria ipt2socks luci-app-adguardhome luci-app-eqosplus luci-app-mosdns luci-app-parentcontrol luci-app-passwall luci-app-passwall2 luci-app-taskplan luci-app-timecontrol luci-app-wolplus microsocks mosdns naiveproxy shadowsocks-libev shadowsocks-rust shadowsocksr-libev simple-obfs sing-box tcping trojan-plus tuic-client v2dat v2ray-geodata v2ray-plugin xray-core xray-plugin
+          PACKAGES: chinadns-ng dns2socks geoview hysteria ipt2socks luci-app-adguardhome luci-app-eqosplus luci-app-mosdns luci-app-parentcontrol luci-app-passwall luci-app-passwall2 luci-app-taskplan luci-app-nft-timecontrol luci-app-wolplus microsocks mosdns naiveproxy shadowsocks-libev shadowsocks-rust shadowsocksr-libev simple-obfs sing-box tcping trojan-plus tuic-client v2dat v2ray-geodata v2ray-plugin xray-core xray-plugin
           NO_REFRESH_CHECK: true
           IGNORE_ERRORS: true
 
